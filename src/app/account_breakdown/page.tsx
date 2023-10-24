@@ -1,6 +1,3 @@
-
-
-
 const AccountBreakdown = () => {
     return (
         <div>
