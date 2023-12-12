@@ -1,8 +1,8 @@
-import { plaidClient } from "../lib/plaid";
+import { plaidClient } from "../../lib/plaid";
 import { CountryCode, Products } from "plaid";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
-export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+export async function GET() {
     try {
         
         const tokenResponse = await plaidClient.linkTokenCreate({
@@ -12,9 +12,10 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             products: [Products.Auth], 
             country_codes: [CountryCode.Us]
         });
+        const {data} = tokenResponse;
 
-        return res.json(tokenResponse)
-
+        return NextResponse.json({data});
+        
     } catch (error) {
         console.log('Error:', error );
     }
