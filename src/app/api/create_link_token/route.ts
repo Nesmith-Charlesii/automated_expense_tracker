@@ -13,7 +13,7 @@ export async function GET() {
             country_codes: [CountryCode.Us]
         });
         const {data} = tokenResponse;
-
+        
         return NextResponse.json({data});
         
     } catch (error) {

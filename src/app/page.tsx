@@ -1,47 +1,18 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, cache } from 'react';
-import { usePlaidLink } from "react-plaid-link";
+import React from 'react';
+import { useRouter } from 'next/navigation';
 
-const App = () => {
-
-  const [token, setToken] = useState(null)
-
-  useEffect(() => {
-
-    const createLinkToken = async () => {
-      // It is not good practice to cache tokens
-      const response = await fetch('/api/create_link_token', {cache: 'no-cache'});
-      const {data} = await response.json()
-   
-      setToken(data.link_token);
-    }
-    
-    createLinkToken();
-  }, [])
-
-  const onSuccess = useCallback(async (publicToken: string) => {
-    await fetch('/api/exchange_public_token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      cache: 'no-cache',
-      body: JSON.stringify({ public_token: publicToken }),
-    })
-  }, [])
-
-  const { open, ready } = usePlaidLink({
-    token,
-    onSuccess,
-  });
-  
+const Homepage: React.FC = () => {
+  const router = useRouter();
 
   return (
-    <button onClick={() => open()} /*disabled={!ready}*/>
-      <strong>Link account</strong>
-    </button>
+    <div>
+      <button type='button' onClick={() => router.push('/link_account')}>
+        Watch your money!
+      </button>
+    </div>
   )
 }
 
-export default App;
+export default Homepage;
