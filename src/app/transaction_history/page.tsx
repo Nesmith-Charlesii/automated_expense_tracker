@@ -1,29 +1,22 @@
-'use client';
+import { unsealData } from "iron-session";
+import { cookies } from 'next/headers';
 
-import React, { useEffect, useState } from 'react';
+export default async function Transaction_History() {
+    
+    const cookieStore = cookies();
+    const encryptedSession = cookieStore.get("access_token")?.value;
+   
+    const session = encryptedSession ?
+    await unsealData(encryptedSession, {
+        password: 'ioaifaifjioajewifeawfoajnifjnewfaewnnawonfianvnawrifnweofn'
+    })
+    : null;
 
-const Transaction_History: React.FC = () => {
-    const [transactions, setTransactions] = useState({});
-
-    useEffect(() => {
-        const fetchTransactions = async () => {
-            const transactions = await fetch('/api/transaction_sync');
-            const {data} = await transactions.json();
-
-            setTransactions(data);
-        }
-        fetchTransactions();
-    }, [])
-
-    useEffect(() => {
-        console.log("TRANSACTIONS", transactions);
-    }, [transactions])
+    console.log("TOKEN", session)
 
     return (
         <div>
-            <h1>Transactions</h1>
+            You're In!
         </div>
     )
 }
-
-export default Transaction_History;

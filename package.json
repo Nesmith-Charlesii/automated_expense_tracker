@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "dotenv": "^16.3.1",
+    "iron-session": "^8.0.1",
     "next": "13.5.5",
     "plaid": "^18.1.0",
     "react": "^18",
